@@ -15,11 +15,16 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
-  private final UserDetailsService userDetailsService;
+  private final UserDetailsService        userDetailsService;
   private final PersistentTokenRepository persistentTokenRepository ;
 
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
+
+    //ENABLE REMEMBER ME COOKIE
+    httpSecurity.rememberMe()
+      .tokenRepository(persistentTokenRepository)
+      .userDetailsService(userDetailsService);
 
     //H2 CONSOLE
     httpSecurity.authorizeRequests(authorize -> { authorize.antMatchers("/h2-console/**").permitAll(); });
@@ -28,15 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //DISABLE CSRF
     httpSecurity.csrf().disable();
 
-    //ENABLE REMEMBER ME COOKIE
-    httpSecurity.rememberMe().tokenRepository(persistentTokenRepository).userDetailsService(userDetailsService);
-
     //SECURE EVERYTHING
     httpSecurity.authorizeRequests().anyRequest().authenticated();
 
     //DEfAULT LOGIN FORM
     httpSecurity.formLogin();
-
 
   }
 
