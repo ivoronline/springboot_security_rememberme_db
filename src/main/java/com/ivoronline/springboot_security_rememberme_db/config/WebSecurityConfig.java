@@ -12,12 +12,16 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+  //PROPERTIES
   @Autowired
   private final UserDetailsService        userDetailsService;
   private final PersistentTokenRepository persistentTokenRepository ;
 
+  //=================================================================
+  // CONFIGURE
+  //=================================================================
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
 
@@ -26,17 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       .tokenRepository(persistentTokenRepository)
       .userDetailsService(userDetailsService);
 
-    //H2 CONSOLE
-    httpSecurity.authorizeRequests(authorize -> { authorize.antMatchers("/h2-console/**").permitAll(); });
-    httpSecurity.headers().frameOptions().sameOrigin();
-
     //DISABLE CSRF
     httpSecurity.csrf().disable();
 
     //SECURE EVERYTHING
     httpSecurity.authorizeRequests().anyRequest().authenticated();
 
-    //DEfAULT LOGIN FORM
+    //DEFAULT LOGIN FORM
     httpSecurity.formLogin();
 
   }

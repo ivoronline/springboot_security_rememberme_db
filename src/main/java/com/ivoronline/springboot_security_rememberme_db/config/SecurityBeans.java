@@ -9,6 +9,9 @@ import javax.sql.DataSource;
 @Configuration
 public class SecurityBeans {
 
+  //=================================================================
+  // PERSISTENT TOKEN REPOSITORY
+  //=================================================================
   @Bean
   public PersistentTokenRepository persistentTokenRepository(DataSource dataSource) {
     JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();

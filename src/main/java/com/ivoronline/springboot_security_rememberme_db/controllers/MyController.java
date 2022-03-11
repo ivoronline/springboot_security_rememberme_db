@@ -1,17 +1,16 @@
 package com.ivoronline.springboot_security_rememberme_db.controllers;
 
-
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class MyController {
 
-  @ResponseBody
-  @RequestMapping("/SayHello")
-  public String sayHello() {
+  //=================================================================
+  // HELLO
+  //=================================================================
+  @RequestMapping("Hello")
+   String hello() {
     return "Hello from Controller";
   }
 
